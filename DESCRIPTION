@@ -1,0 +1,10 @@
+Package: SSCUC
+Type: Package
+Title: Semi-supervised classification with unknown classes
+Version: 0.1.0
+Author: Who wrote it
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: A re-implementation of the Semi-Supervised Classifier with Unknown Classes (SSC-UC), proposed by Schrunner et al. (2020)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
