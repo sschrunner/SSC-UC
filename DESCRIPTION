@@ -20,11 +20,11 @@ Depends:
 Imports:
     knitr,
     mclust,
-    utils,
-    stats
+    stats,
+    utils
 Suggests: 
-    rmarkdown,
-    mvtnorm
+    mvtnorm,
+    rmarkdown
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 
 # Prepare a sample dataset for Naive Bayes
 ```{r setup}
+set.seed(1)
 library(mvtnorm)
 
 n_labeled <- 300
