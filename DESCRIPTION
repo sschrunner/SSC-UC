@@ -9,16 +9,23 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-6919-3483"))
   )
 Description: A re-implementation of the Semi-Supervised Classifier with
-    Unknown Classes (SSC-UC), proposed by Schrunner et al. (2020)
-License: GPL-3
+    Unknown Classes (SSC-UC), proposed by Schrunner et al. (2020). The
+    package includes an implementation of Bayes and Naive Bayes
+    classifiers, as well as the semi-supervised SSC-UC method.
+License: GPL (>= 3)
 URL: https://dx.doi.org/10.1145/3341105.3373890
 Depends: 
     R (>= 3.5.0)
 Imports:
     knitr,
     mclust,
-    mvtnorm,
+    utils,
     stats
+Suggests: 
+    rmarkdown,
+    mvtnorm
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3

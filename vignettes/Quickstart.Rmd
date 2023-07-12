@@ -1,0 +1,48 @@
+---
+title: "Quickstart"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quickstart}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Prepare a sample dataset for Naive Bayes
+```{r setup}
+library(mvtnorm)
+
+n_labeled <- 300
+n_unlabeled <- 3000
+n_feats <- 10
+
+mu <- c(-1,0,1) %*% t(rep(1, n_feats))
+rownames(mu) <- 1:3
+sigma <- diag(rep(1,n_feats))
+
+labeled_classes <- rep(c(1,2), each = n_labeled / 2)
+unlabeled_classes <- rep(c(1,2,3), each = n_unlabeled / 3)
+num_sample <- c(table(labeled_classes), table(unlabeled_classes))
+
+X <- c()
+for(i in 1:length(num_sample)){
+  X <- rbind(X, rmvnorm(num_sample[i], mu[names(num_sample)[i],], sigma))
+}
+y <- rep(c(1, 2, NA), c(table(labeled_classes), length(unlabeled_classes)))
+```
+
+```{r setup2}
+library(SSCUC)
+
+data <- as.data.frame(cbind(X, y))
+formula <- y ~ V1 + V2 - 1
+
+model <- SSC(formula, data, naive = TRUE)
+summary(model)
+```

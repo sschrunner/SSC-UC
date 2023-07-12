@@ -1,4 +1,4 @@
-# convert formula and data.frame object to matrix X and vector y
+#' @import stats
 convertFormula <- function(formula, data){
   frame <- model.frame(formula, data, na.action = na.pass)
   y <- as.factor(model.response(frame))
@@ -7,10 +7,12 @@ convertFormula <- function(formula, data){
   return(list(X = X, y = y))
 }
 
-#' Train a Gaussian Bayes Classifier
+#' Bayes Classifier or Naive Bayes Classifier
+#' @describeIn BayesClassifier train a BayesClassifier object
 #' @inheritParams SSC
-#' @importFrom mvtnorm dmvnorm
-BayesClassifier <- function(formula, data){
+#' @importFrom mclust dmvnorm
+#' @import stats
+BayesClassifier <- function(formula, data, naive = FALSE){
   l <- convertFormula(formula, data)
   X <- l$X
   y <- l$y
@@ -22,10 +24,15 @@ BayesClassifier <- function(formula, data){
     submatrix <- X[inds,,drop = F]
 
     mu <- colMeans(submatrix)
-    Sigma <- cov(submatrix)
+    if(naive){
+      Sigma <- diag(apply(submatrix, 2, var))
+    }
+    else{
+      Sigma <- cov(submatrix)
+    }
     prior <- length(inds) / length(y)
 
-    logLik <- logLik + dmvnorm(submatrix, mu, Sigma, log = TRUE)
+    logLik <- logLik + sum(dmvnorm(submatrix, mu, Sigma, log = TRUE))
     param[[c]] <- list(mu = mu,
                        Sigma = Sigma,
                        prior = prior)
@@ -35,12 +42,18 @@ BayesClassifier <- function(formula, data){
   model <- list(param = param,
                 formula = formula,
                 n = nrow(data),
-                logLik = logLik)
+                logLik = logLik,
+                naive = naive)
   class(model) <- "BayesClassifier"
   return(model)
 }
 
-#' @importFrom mvtnorm dmvnorm
+#' @describeIn BayesClassifier predict new data using a BayesClassifier object
+#' @param object a BayesClassifier object
+#' @param newdata a data.frame containing new features to predict
+#' @param type type of return value, either "probs", or "class"
+#' @return either a matrix containing log-probabilities for each class, or a vector of classes, see 'type'.
+#' @importFrom mclust dmvnorm
 predict.BayesClassifier <- function(object, newdata, type = "probs"){
   l <- convertFormula(object$formula, newdata)
   X <- l$X

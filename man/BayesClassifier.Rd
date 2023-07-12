@@ -2,15 +2,39 @@
 % Please edit documentation in R/BayesClassifier.R
 \name{BayesClassifier}
 \alias{BayesClassifier}
-\title{Train a Gaussian Bayes Classifier}
+\alias{predict.BayesClassifier}
+\title{Bayes Classifier or Naive Bayes Classifier}
 \usage{
-BayesClassifier(formula, data)
+BayesClassifier(formula, data, naive = FALSE)
+
+\method{predict}{BayesClassifier}(object, newdata, type = "probs")
 }
 \arguments{
 \item{formula}{a formula object explaining the functional relation between input variables and target}
 
 \item{data}{a data.frame containing the dataset}
+
+\item{naive}{whether a Bayes or Naive Bayes classifier should be used}
+
+\item{object}{a BayesClassifier object}
+
+\item{newdata}{a data.frame containing new features to predict}
+
+\item{type}{type of return value, either "probs", or "class"}
+}
+\value{
+either a matrix containing log-probabilities for each class, or a vector of classes, see 'type'.
 }
 \description{
-Train a Gaussian Bayes Classifier
+Bayes Classifier or Naive Bayes Classifier
 }
+\section{Methods (by generic)}{
+\itemize{
+\item \code{predict(BayesClassifier)}: predict new data using a BayesClassifier object
+
+}}
+\section{Functions}{
+\itemize{
+\item \code{BayesClassifier()}: train a BayesClassifier object
+
+}}
