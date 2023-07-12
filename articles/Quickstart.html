@@ -100,9 +100,9 @@
 <span><span class="va">formula</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">~</span> <span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span> <span class="op">-</span> <span class="fl">1</span></span>
 <span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SSC.html">SSC</a></span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, naive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "5 new classes found"</span></span>
+<span><span class="co">#&gt; [1] "4 new classes found"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span><span class="co">#&gt; BayesClassifier model with  7  classes </span></span>
+<span><span class="co">#&gt; BayesClassifier model with  6  classes </span></span>
 <span><span class="co">#&gt; y ~ V1 + V2 - 1</span></span>
 <span><span class="co">#&gt; Model parameters</span></span></code></pre></div>
 <table class="table">
@@ -115,45 +115,39 @@
 <tbody>
 <tr class="odd">
 <td align="left">1</td>
-<td align="left">-0.84,-1.03</td>
-<td align="left">0.98,0,0,0.81</td>
-<td align="right">0.36</td>
+<td align="left">-1.03,-0.98</td>
+<td align="left">0.89,0,0,0.93</td>
+<td align="right">0.42</td>
 </tr>
 <tr class="even">
 <td align="left">2</td>
-<td align="left">0.09,0.03</td>
-<td align="left">0.96,0,0,1.18</td>
-<td align="right">0.36</td>
+<td align="left">-0.03,-0.05</td>
+<td align="left">1.08,0,0,0.81</td>
+<td align="right">0.42</td>
 </tr>
 <tr class="odd">
 <td align="left">U1</td>
-<td align="left">-3.29,-1.05</td>
-<td align="left">0.17,0,0,1.84</td>
-<td align="right">0.04</td>
+<td align="left">-3.67,-1.12</td>
+<td align="left">0.04,0,0,0.15</td>
+<td align="right">0.03</td>
 </tr>
 <tr class="even">
 <td align="left">U2</td>
-<td align="left">-0.84,-3.34</td>
-<td align="left">1.2,0,0,0.04</td>
-<td align="right">0.06</td>
+<td align="left">-2.67,-2.9</td>
+<td align="left">0.21,0,0,0.18</td>
+<td align="right">0.03</td>
 </tr>
 <tr class="odd">
 <td align="left">U3</td>
-<td align="left">3.34,1.08</td>
-<td align="left">0.08,0,0,0.42</td>
+<td align="left">1.55,3.23</td>
+<td align="left">1.79,0,0,0.28</td>
 <td align="right">0.06</td>
 </tr>
 <tr class="even">
 <td align="left">U4</td>
-<td align="left">2.41,2.27</td>
-<td align="left">0.06,0,0,0.08</td>
+<td align="left">3.59,1.21</td>
+<td align="left">0.18,0,0,1.24</td>
 <td align="right">0.05</td>
-</tr>
-<tr class="odd">
-<td align="left">U5</td>
-<td align="left">1.26,3.27</td>
-<td align="left">0.54,0,0,0.13</td>
-<td align="right">0.07</td>
 </tr>
 </tbody>
 </table>
