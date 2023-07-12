@@ -13,7 +13,8 @@ Description: A re-implementation of the Semi-Supervised Classifier with
     package includes an implementation of Bayes and Naive Bayes
     classifiers, as well as the semi-supervised SSC-UC method.
 License: GPL (>= 3)
-URL: https://dx.doi.org/10.1145/3341105.3373890
+URL: https://dx.doi.org/10.1145/3341105.3373890,
+    https://sschrunner.github.io/SSC-UC/
 Depends: 
     R (>= 3.5.0)
 Imports:
