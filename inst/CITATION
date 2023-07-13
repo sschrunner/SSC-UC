@@ -1,0 +1,15 @@
+citHeader("To cite the 'SSCUC' R package and the SSC-UC method in publications, please use:")
+
+citation(auto = meta)
+
+bibentry(bibtype = "inproceedings",
+         title = "A generative semi-supervised classifier for datasets with unknown classes",
+         author = c(person("Stefan", "Schrunner"),
+                    person(c("Bernhard", "C."), "Geiger"),
+                    person("Anja", "Zernig"),
+                    person("Roman", "Kern")),
+         year = "2020", publisher = "{ACM}",
+         month = "mar",
+         url = "https://doi.org/10.1145/3341105.3373890",
+         booktitle = "Proceedings of the 35th Annual {ACM} Symposium on Applied Computing",
+         doi = "10.1145/3341105.3373890")
