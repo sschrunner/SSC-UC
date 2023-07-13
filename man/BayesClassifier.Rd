@@ -5,9 +5,9 @@
 \alias{predict.BayesClassifier}
 \title{Bayes Classifier or Naive Bayes Classifier}
 \usage{
-BayesClassifier(formula, data, naive = FALSE)
+BayesClassifier(formula, data, naive = FALSE, var_eps = 0.01)
 
-\method{predict}{BayesClassifier}(object, newdata, type = "probs")
+\method{predict}{BayesClassifier}(object, newdata, type = "probs", ...)
 }
 \arguments{
 \item{formula}{a formula object explaining the functional relation between input variables and target}
@@ -16,11 +16,15 @@ BayesClassifier(formula, data, naive = FALSE)
 
 \item{naive}{whether a Bayes or Naive Bayes classifier should be used}
 
+\item{var_eps}{scalar to add to the main diagonal of the covariance matrix to assure numerical stability. If 0, no scalar will be added.}
+
 \item{object}{a BayesClassifier object}
 
 \item{newdata}{a data.frame containing new features to predict}
 
 \item{type}{type of return value, either "probs", or "class"}
+
+\item{...}{currently unused}
 }
 \value{
 either a matrix containing log-probabilities for each class, or a vector of classes, see 'type'.

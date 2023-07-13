@@ -24,7 +24,7 @@ summary.BayesClassifier <- function(object, ...){
     data.frame(
       mu = sapply(coef(object), function(x){return(paste0(round(x$mu, 2), collapse = ","))}),
       Sigma = sapply(coef(object), function(x){return(paste0(round(x$Sigma, 2), collapse = ","))}),
-      prior = sapply(coef(object), function(x){return(ifelse(x$prior > 0.005, round(x$prior,2), "<0.01"))})
+      prior = sapply(coef(object), function(x){return(ifelse(exp(x$prior) > 0.005, round(exp(x$prior),2), "<0.01"))})
     )
   )
 }
@@ -41,6 +41,12 @@ dim.BayesClassifier <- function(x){
   return(length(x$param))
 }
 
+#' @describeIn print.BayesClassifier returns the number of training observations used for the BayesClassifier
+#' @export
+nobs.BayesClassifier <- function(object, ...){
+  return(object$n)
+}
+
 #' @describeIn print.BayesClassifier returns the formula of the BayesClassifier
 #' @export
 formula.BayesClassifier <- function(x, ...){
@@ -53,7 +59,17 @@ logLik.BayesClassifier <- function(object, ...){
   return(object$logLik)
 }
 
-#
-# BIC.BayesClassifier <- function(object, ...){
-#   return(dim(object) * log(object$n) - 2 * logLik(object))
-# }
+#' @describeIn print.BayesClassifier returns the Akaike Information Criterion for the BayesClassifier
+#' @param k penalty term; k=2 in classical AIC
+#' @importFrom stats AIC
+#' @export
+AIC.BayesClassifier <- function(object, ..., k = 2){
+  return(k * dim(object) - 2 * logLik(object))
+}
+
+#' @describeIn print.BayesClassifier returns the Bayesian Information Criterion for the BayesClassifier
+#' @importFrom stats BIC
+#' @export
+BIC.BayesClassifier <- function(object, ...){
+  return(AIC(object, k = log(nobs(object)), ...))
+}

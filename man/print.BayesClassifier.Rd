@@ -5,8 +5,11 @@
 \alias{summary.BayesClassifier}
 \alias{coef.BayesClassifier}
 \alias{dim.BayesClassifier}
+\alias{nobs.BayesClassifier}
 \alias{formula.BayesClassifier}
 \alias{logLik.BayesClassifier}
+\alias{AIC.BayesClassifier}
+\alias{BIC.BayesClassifier}
 \title{BayesClassifier generics}
 \usage{
 \method{print}{BayesClassifier}(x, ...)
@@ -17,9 +20,15 @@
 
 \method{dim}{BayesClassifier}(x)
 
+\method{nobs}{BayesClassifier}(object, ...)
+
 \method{formula}{BayesClassifier}(x, ...)
 
 \method{logLik}{BayesClassifier}(object, ...)
+
+\method{AIC}{BayesClassifier}(object, ..., k = 2)
+
+\method{BIC}{BayesClassifier}(object, ...)
 }
 \arguments{
 \item{x}{a BayesClassifier object}
@@ -27,6 +36,8 @@
 \item{...}{currently unused}
 
 \item{object}{a BayesClassifier object}
+
+\item{k}{penalty term; k=2 in classical AIC}
 }
 \description{
 Generic functions implemented for the BayesClassifier class
@@ -41,8 +52,14 @@ Generic functions implemented for the BayesClassifier class
 
 \item \code{dim(BayesClassifier)}: returns the number of classes in the BayesClassifier
 
+\item \code{nobs(BayesClassifier)}: returns the number of training observations used for the BayesClassifier
+
 \item \code{formula(BayesClassifier)}: returns the formula of the BayesClassifier
 
 \item \code{logLik(BayesClassifier)}: returns the log-likelihood of the BayesClassifier
+
+\item \code{AIC(BayesClassifier)}: returns the Akaike Information Criterion for the BayesClassifier
+
+\item \code{BIC(BayesClassifier)}: returns the Bayesian Information Criterion for the BayesClassifier
 
 }}

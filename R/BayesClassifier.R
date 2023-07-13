@@ -12,7 +12,8 @@ convertFormula <- function(formula, data){
 #' @inheritParams SSC
 #' @importFrom mclust dmvnorm
 #' @import stats
-BayesClassifier <- function(formula, data, naive = FALSE){
+#' @export
+BayesClassifier <- function(formula, data, naive = FALSE, var_eps = 1e-2){
   l <- convertFormula(formula, data)
   X <- l$X
   y <- l$y
@@ -30,7 +31,8 @@ BayesClassifier <- function(formula, data, naive = FALSE){
     else{
       Sigma <- cov(submatrix)
     }
-    prior <- length(inds) / length(y)
+    Sigma <- Sigma + diag(rep(var_eps, ncol(X)))
+    prior <- log(length(inds) / length(y))
 
     logLik <- logLik + sum(dmvnorm(submatrix, mu, Sigma, log = TRUE))
     param[[c]] <- list(mu = mu,
@@ -40,6 +42,7 @@ BayesClassifier <- function(formula, data, naive = FALSE){
   names(param) <- levels(y)
 
   model <- list(param = param,
+                prior = prior,
                 formula = formula,
                 n = nrow(data),
                 logLik = logLik,
@@ -52,9 +55,11 @@ BayesClassifier <- function(formula, data, naive = FALSE){
 #' @param object a BayesClassifier object
 #' @param newdata a data.frame containing new features to predict
 #' @param type type of return value, either "probs", or "class"
+#' @param ... currently unused
 #' @return either a matrix containing log-probabilities for each class, or a vector of classes, see 'type'.
 #' @importFrom mclust dmvnorm
-predict.BayesClassifier <- function(object, newdata, type = "probs"){
+#' @export
+predict.BayesClassifier <- function(object, newdata, type = "probs", ...){
   l <- convertFormula(object$formula, newdata)
   X <- l$X
 
@@ -66,14 +71,17 @@ predict.BayesClassifier <- function(object, newdata, type = "probs"){
                            p$mu,
                            p$Sigma,
                            log = TRUE) +
-                    p$prior)
+                   p$prior)
   }
   colnames(probs) <- names(object$param)
 
   if(type == "probs"){
     return(probs)
   }
+  else if(type == "class"){
+    return(colnames(probs)[apply(probs, 1, which.max)])
+  }
   else{
-    return(apply(probs, 1, which.max))
+    stop("Unknown type")
   }
 }

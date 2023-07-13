@@ -4,7 +4,14 @@
 \alias{SSC}
 \title{Train an SSC-UC model}
 \usage{
-SSC(formula, data, perc_spies = 0.05, naive = FALSE, var_eps = 0.01)
+SSC(
+  formula,
+  data,
+  perc_spies = 0.05,
+  naive = FALSE,
+  var_eps = 0.01,
+  max_unknown = 6
+)
 }
 \arguments{
 \item{formula}{a formula object explaining the functional relation between input variables and target}
@@ -15,7 +22,9 @@ SSC(formula, data, perc_spies = 0.05, naive = FALSE, var_eps = 0.01)
 
 \item{naive}{whether a Bayes or Naive Bayes classifier should be used}
 
-\item{var_eps}{scalar to add to the main diagonal of the covariance matrix to assure numerical stability}
+\item{var_eps}{scalar to add to the main diagonal of the covariance matrix to assure numerical stability. If 0, no scalar will be added.}
+
+\item{max_unknown}{maximum number of unknown classes}
 }
 \value{
 a BayesClassifier object

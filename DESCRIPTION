@@ -23,6 +23,7 @@ Imports:
     stats,
     utils
 Suggests: 
+    caret,
     mvtnorm,
     rmarkdown
 VignetteBuilder: 
