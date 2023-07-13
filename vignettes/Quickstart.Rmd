@@ -22,7 +22,7 @@ set.seed(1)
 # sample sizes
 n_labeled <- 300
 n_unlabeled <- 3000
-n_feats <- 10
+n_feats <- 2
 
 # mean values and covariance matrices
 mu <- c(-10, -5, 0, 5, 10) %*% t(rep(1, n_feats))
@@ -41,8 +41,14 @@ X <- c()
 for(i in 1:length(num_sample)){
   X <- rbind(X, rmvnorm(num_sample[i], mu[names(num_sample)[i],], sigma))
 }
-y <- rep(c(1, 2, NA), c(table(labeled_classes), length(unlabeled_classes)))
+y <- rep(c(2, 3, NA), c(table(labeled_classes), length(unlabeled_classes)))
 ytrue <- rep(names(num_sample), num_sample)
+
+head(X)
+head(y)
+
+summary(as.factor(y))
+summary(as.factor(ytrue))
 ```
 
 ## Train SSC-UC model
@@ -78,6 +84,16 @@ kable(confusionMatrix(
 )
 ```
 
+```{r plot1, fig.height = 6, fig.width = 6}
+library(ggplot2)
+ggplot(cbind(subset(data, is.na(y)), pred = pred), 
+       aes(x = V1, y = V2, color = as.factor(pred))) + 
+  geom_point() + 
+  theme_bw() + 
+  theme(legend.position = "top") + 
+  labs(color = "predicted class")
+```
+
 ### Evaluate in reduced confusion matrix (all new classes as class "U")
 ```{r evaluate2}
 # set all new class labels to "U"
@@ -90,4 +106,14 @@ kable(confusionMatrix(
   reference = factor(ytrue[is.na(y)], levels = levels), 
   data = factor(pred, levels = levels))$table[sort(unique(pred)),sort(unique(ytrue))]
 )
+```
+
+```{r plot2, fig.height = 6, fig.width = 6}
+library(ggplot2)
+ggplot(cbind(subset(data, is.na(y)), pred = pred), 
+       aes(x = V1, y = V2, color = as.factor(pred))) + 
+  geom_point() + 
+  theme_bw() + 
+  theme(legend.position = "top") + 
+  labs(color = "predicted class")
 ```
