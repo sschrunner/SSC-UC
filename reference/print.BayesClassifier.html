@@ -61,10 +61,19 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for BayesClassifier</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for BayesClassifier</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">formula</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for BayesClassifier</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for BayesClassifier</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span>, k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for BayesClassifier</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -80,6 +89,10 @@
 <dt>object</dt>
 <dd><p>a BayesClassifier object</p></dd>
 
+
+<dt>k</dt>
+<dd><p>penalty term; k=2 in classical AIC</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
@@ -88,8 +101,11 @@
 <li><p><code>summary(BayesClassifier)</code>: summarizes the BayesClassifier</p></li>
 <li><p><code>coef(BayesClassifier)</code>: returns the list of model parameters in the BayesClassifier</p></li>
 <li><p><code>dim(BayesClassifier)</code>: returns the number of classes in the BayesClassifier</p></li>
+<li><p><code>nobs(BayesClassifier)</code>: returns the number of training observations used for the BayesClassifier</p></li>
 <li><p><code>formula(BayesClassifier)</code>: returns the formula of the BayesClassifier</p></li>
 <li><p><code>logLik(BayesClassifier)</code>: returns the log-likelihood of the BayesClassifier</p></li>
+<li><p><code>AIC(BayesClassifier)</code>: returns the Akaike Information Criterion for the BayesClassifier</p></li>
+<li><p><code>BIC(BayesClassifier)</code>: returns the Bayesian Information Criterion for the BayesClassifier</p></li>
 </ul></div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
