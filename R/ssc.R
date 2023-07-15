@@ -40,30 +40,38 @@ SSC <- function(formula, data,
   pred_unlabeled <- predict(mod, newdata = data[unlabeled_inds,], type = "probs") # PREDICT UNLABELED
   newclass_inds <- unlabeled_inds[which(apply(pred_unlabeled[,setdiff(colnames(pred_unlabeled), "U")], 1, max) < t)] # PREDICTED CLASS HAS SMALL PROBABILITY
 
-  # bic <- c()
-  # models <- list()
-  # for(g in 1:max_unknown){
-  #   print(length(newclass_inds))
-  #   try({
-  gmm <- Mclust(X[newclass_inds,],
-                  #G = g,
-                  modelNames = ifelse(naive, "VVI", "VVV")) # train GMM on these new data
-      print(paste(gmm$G, "new classes found"))
+  # only if new classes were detected
+  if(length(newclass_inds) > 0){
+    # bic <- c()
+    # models <- list()
+    # for(g in 1:max_unknown){
+    #   print(length(newclass_inds))
+    #   try({
+    uniform_cols <- apply(X[newclass_inds,, drop = F], 2, function(x){return(length(unique(x)))}) == 1
+    gmm <- Mclust(X[newclass_inds, !uniform_cols, drop = F],
+                    #G = g,
+                    modelNames = ifelse(naive, "VVI", "VVV")) # train GMM on these new data
 
-      # append new elements to classifier
-      levels(y) <- c(levels(y), paste0("U",1:gmm$G))
-      y[newclass_inds] <- paste0("U", predict(gmm, newdata = X[newclass_inds, ])$classification) # set new class elements
-      data[, toString(formula[[2]])] <- y
+    if(is.null(gmm)){
+      stop("Error: GMM did not run properly")
+    }
+    print(paste(gmm$G, "new classes found"))
 
-      # re-train with all classes
-      labeled_inds <- which(!is.na(y))
-      mod <- BayesClassifier(formula, data[labeled_inds,], naive = naive, var_eps = var_eps)
+    # append new elements to classifier
+    levels(y) <- c(levels(y), paste0("U",1:gmm$G))
+    y[newclass_inds] <- paste0("U", predict(gmm, newdata = X[newclass_inds, ])$classification) # set new class elements
+    data[, toString(formula[[2]])] <- y
+
+    # re-train with all classes
+    labeled_inds <- which(!is.na(y))
+    mod <- BayesClassifier(formula, data[labeled_inds,], naive = naive, var_eps = var_eps)
     # })
-#
-#     bic <- c(bic, BIC(mod))
-#     models <- append(models, list(mod))
-#   }
-#   print(bic)
+    #
+    #     bic <- c(bic, BIC(mod))
+    #     models <- append(models, list(mod))
+    #   }
+    #   print(bic)
+  }
 
   # return(models[[which.max(bic)]])
   return(mod)
