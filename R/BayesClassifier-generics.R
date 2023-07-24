@@ -64,7 +64,10 @@ logLik.BayesClassifier <- function(object, ...){
 #' @importFrom stats AIC
 #' @export
 AIC.BayesClassifier <- function(object, ..., k = 2){
-  return(k * dim(object) - 2 * logLik(object))
+  num_param <- ifelse(object$naive,
+                      dim(object) * (2 * (-0.5 + sqrt(length(unlist(coef(object))) / dim(object) - 0.75)) + 1),
+                      length(unlist(coef(object))))
+  return(k * num_param - 2 * logLik(object))
 }
 
 #' @describeIn print.BayesClassifier returns the Bayesian Information Criterion for the BayesClassifier

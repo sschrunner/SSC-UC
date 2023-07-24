@@ -1,8 +1,8 @@
 ---
-title: "Quickstart"
+title: "Bayes Classifier example"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Quickstart}
+  %\VignetteIndexEntry{BayesClassifier}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,55 +14,62 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Prepare a sample dataset for Naive Bayes
+## Prepare a simulated dataset for a Bayes Classifier
 
 In the first step, we simulate a dataset with the following specifications:
 
-- a total number of <tt>5</tt> classes, 2 of which are known and 3 are unknown, respectively
-- <tt>n_labeled = 300</tt> labeled samples, evenly distributed over the 2 known classes
-- <tt>n_unlabeled = 3000</tt> unlabeled samples, evenly distributed over the 5 classes
+- a total number of <tt>10</tt> classes, 4 of which are known and 6 are unknown, respectively
+- <tt>n_labeled = 200</tt> labeled samples, evenly distributed over the 4 known classes
+- <tt>n_unlabeled = 5000</tt> unlabeled samples, evenly distributed over the 10 classes
 - a dimension of <tt>n_feats = 2</tt> features (to facilitate representation)
 
-Each class $i$ is represented by a bivariate Gaussian distribution with mean vector $\mu = (\mu_1^{(i)}, \mu_2^{(i)})$ and covariance matrix $$\Sigma = \left(\begin{array}{cc}1 & 0 \\ 0 & 1\end{array}\right)$$ (identical for all classes). The known classes are 0 and 1.
+Each class $i$ is represented by a bivariate Gaussian distribution with mean vector $\mu = (\mu_1^{(i)}, \mu_2^{(i)})$ and covariance matrix $$\Sigma_i = \left(\begin{array}{cc}\sigma_{1,1}^{(i)} & \sigma_{1,2}^{(i)} \\ \sigma_{1,2}^{(i)} & \sigma_{2,2}^{(i)}\end{array}\right)$$. The known classes are 0-3.
 
 ```{r setup}
 library(mvtnorm)
 set.seed(1)
 
 # sample sizes
-n_labeled <- 300
-n_unlabeled <- 3000
+n_labeled <- 400
+n_unlabeled <- 5000
 n_feats <- 2
 
 # mean values and covariance matrices
-mu <- rbind(
-  c(-5, 10),
-  c(0, 5),
-  c(-5, 0),
-  c(-10,5),
-  c(10,-10)
-)
-rownames(mu) <- 0:4
-sigma <- diag(rep(1,n_feats))
+mu <- t(replicate(
+  10,
+  runif(2, -10, 10)
+))
+sigma <- t(replicate(
+  10,
+  {
+    A = matrix(runif(2^2)*2-1, ncol=2)
+    return(as.vector( t(A) %*% A))
+  }
+))
+rownames(mu) <- rownames(sigma) <- 0:9
 
 print(mu)
 print(sigma)
 ```
 
-Given the data specifications, we simulate from the bivariate Gaussian distribution to generate the dataset given the class vector. We discriminate between the true class vector <tt>y_true</tt> containing the labels <tt>0-4</tt> of all samples, and the model input class vector <tt>y</tt> containing a true label only for the labeled data, and <tt>NA</tt>, otherwise.
+Given the data specifications, we simulate from the bivariate Gaussian distribution to generate the dataset given the class vector. We discriminate between the true class vector <tt>y_true</tt> containing the labels <tt>0-9</tt> of all samples, and the model input class vector <tt>y</tt> containing a true label only for the labeled data, and <tt>NA</tt>, otherwise.
 
 ```{r simulate data}
 # specify number of labeles / unlabeled samples per class
-labeled_classes <- rep(0:1, each = n_labeled / 2)
-unlabeled_classes <- rep(0:4, each = n_unlabeled / 5)
+labeled_classes <- rep(0:3, each = n_labeled / 4)
+unlabeled_classes <- rep(0:9, each = n_unlabeled / 10)
 num_sample <- c(table(labeled_classes), table(unlabeled_classes))
 
 # simulate X, ytrue and y
 X <- c()
 for(i in 1:length(num_sample)){
-  X <- rbind(X, rmvnorm(num_sample[i], mu[names(num_sample)[i],], sigma))
+  X <- rbind(X, rmvnorm(num_sample[i], 
+                  mu[names(num_sample)[i],], 
+                  matrix(sigma[names(num_sample)[i],], nrow = 2, ncol = 2)
+                )
+             )
 }
-y <- rep(c(1:2, NA), c(table(labeled_classes), length(unlabeled_classes)))
+y <- rep(c(0:3, NA), c(table(labeled_classes), length(unlabeled_classes)))
 ytrue <- rep(names(num_sample), num_sample)
 colnames(X) <- paste0("x", 1:2)
 
@@ -95,18 +102,18 @@ ggplot(rbind(subset(data, is.na(y)), subset(data, !is.na(y))),
   theme(legend.position = "bottom") + 
   labs(color = "model input class label", 
        title = "simulated dataset for SSC-UC",
-       subtitle = "5-class dataset with 3 unknown classes")
+       subtitle = "10-class dataset with 6 unknown classes")
 ```
 
 ## Train SSC-UC model
 
-The SSC-UC model is called via <tt>SSCUC</tt> and returns a <tt>BayesClassifier</tt> object with known and unknown classes. In this case, a naive Bayes classifier is used, specified by the argument <tt>naive=TRUE</tt>.
+The SSC-UC model is called via <tt>SSCUC</tt> and returns a <tt>BayesClassifier</tt> object with known and unknown classes. In this case, a Bayes classifier is used, specified by the argument <tt>naive=TRUE</tt>.
 
 ```{r train}
 library(SSCUC)
 
 # train model
-model <- SSC(formula, data, naive = TRUE)
+model <- SSC(formula, data, naive = FALSE)
 summary(model)
 ```
 
@@ -123,8 +130,8 @@ pred <- predict(model, newdata = subset(data, is.na(y)), type = "class")
 
 The full confusion matrix contains all the classes modeled by the <tt>BayesClassifier</tt>:
 
-- the class labels <tt>0-4</tt> from the data specification as reference labels (not that, however, only classes 0 and 1 are known to the model a-priori),
-- the class labels for known classes (<tt>0-1</tt>) and unknown classes (<tt>U1-U4</tt>) as predicted labels.
+- the class labels <tt>0-9</tt> from the data specification as reference labels (not that, however, only classes 0-3 are known to the model a-priori),
+- the class labels for known classes (<tt>0-3</tt>) and unknown classes (<tt>U1-U8</tt>) as predicted labels.
 
 ```{r evaluate1}
 library(caret)
@@ -155,7 +162,7 @@ ggplot(cbind(subset(data, is.na(y)), pred = pred),
 
 ### Evaluate in reduced confusion matrix (all unknown classes as class "U")
 
-As a second evaluation step, we can summarize all "unknown" classes detected by SSC-UC into one class "U" (unknown). Thereby, we reduce the number of labels in the confusion matrix to <tt>0-1</tt> and <tt>U</tt>.
+As a second evaluation step, we can summarize all "unknown" classes detected by SSC-UC into one class "U" (unknown). Thereby, we reduce the number of labels in the confusion matrix to <tt>0-3</tt> and <tt>U</tt>.
 
 ```{r evaluate2}
 # set all new class labels to "U"

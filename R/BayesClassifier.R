@@ -18,6 +18,8 @@ BayesClassifier <- function(formula, data, naive = FALSE, var_eps = 1e-2){
   X <- l$X
   y <- l$y
 
+  y <- droplevels(y)
+
   param <- list()
   logLik <- 0
   for(c in levels(y)){
