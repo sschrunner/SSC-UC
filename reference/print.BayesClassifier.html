@@ -26,6 +26,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/BayesClassifier.html">Bayes Classifier example</a>
     <a class="dropdown-item" href="../articles/Quickstart.html">Quickstart</a>
+    <a class="dropdown-item" href="../articles/RealWorld.html">MNIST example</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -59,7 +60,16 @@
 <span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for BayesClassifier</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for BayesClassifier</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for BayesClassifier</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for BayesClassifier</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for BayesClassifier</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -101,7 +111,10 @@
 <ul><li><p><code>print(BayesClassifier)</code>: prints the BayesClassifier</p></li>
 <li><p><code>summary(BayesClassifier)</code>: summarizes the BayesClassifier</p></li>
 <li><p><code>coef(BayesClassifier)</code>: returns the list of model parameters in the BayesClassifier</p></li>
-<li><p><code>dim(BayesClassifier)</code>: returns the number of classes in the BayesClassifier</p></li>
+<li><p><code>dimnames(BayesClassifier)</code>: returns the names the features used in the BayesClassifier</p></li>
+<li><p><code>dim(BayesClassifier)</code>: returns the dimensionality of the feature space used in the BayesClassifier</p></li>
+<li><p><code>levels(BayesClassifier)</code>: returns the names of the classes in the BayesClassifier</p></li>
+<li><p><code>length(BayesClassifier)</code>: returns the number of classes in the BayesClassifier</p></li>
 <li><p><code>nobs(BayesClassifier)</code>: returns the number of training observations used for the BayesClassifier</p></li>
 <li><p><code>formula(BayesClassifier)</code>: returns the formula of the BayesClassifier</p></li>
 <li><p><code>logLik(BayesClassifier)</code>: returns the log-likelihood of the BayesClassifier</p></li>

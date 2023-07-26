@@ -4,7 +4,8 @@ pkgdown_sha: ~
 articles:
   BayesClassifier: BayesClassifier.html
   Quickstart: Quickstart.html
-last_built: 2023-07-24T14:54Z
+  RealWorld: RealWorld.html
+last_built: 2023-07-26T20:41Z
 urls:
   reference: https://sschrunner.github.io/SSC-UC/reference
   article: https://sschrunner.github.io/SSC-UC/articles
