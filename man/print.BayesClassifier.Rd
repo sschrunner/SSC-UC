@@ -4,7 +4,10 @@
 \alias{print.BayesClassifier}
 \alias{summary.BayesClassifier}
 \alias{coef.BayesClassifier}
+\alias{dimnames.BayesClassifier}
 \alias{dim.BayesClassifier}
+\alias{levels.BayesClassifier}
+\alias{length.BayesClassifier}
 \alias{nobs.BayesClassifier}
 \alias{formula.BayesClassifier}
 \alias{logLik.BayesClassifier}
@@ -18,7 +21,13 @@
 
 \method{coef}{BayesClassifier}(object, ...)
 
+\method{dimnames}{BayesClassifier}(x)
+
 \method{dim}{BayesClassifier}(x)
+
+\method{levels}{BayesClassifier}(x)
+
+\method{length}{BayesClassifier}(x)
 
 \method{nobs}{BayesClassifier}(object, ...)
 
@@ -50,7 +59,13 @@ Generic functions implemented for the BayesClassifier class
 
 \item \code{coef(BayesClassifier)}: returns the list of model parameters in the BayesClassifier
 
-\item \code{dim(BayesClassifier)}: returns the number of classes in the BayesClassifier
+\item \code{dimnames(BayesClassifier)}: returns the names the features used in the BayesClassifier
+
+\item \code{dim(BayesClassifier)}: returns the dimensionality of the feature space used in the BayesClassifier
+
+\item \code{levels(BayesClassifier)}: returns the names of the classes in the BayesClassifier
+
+\item \code{length(BayesClassifier)}: returns the number of classes in the BayesClassifier
 
 \item \code{nobs(BayesClassifier)}: returns the number of training observations used for the BayesClassifier
 

@@ -23,7 +23,7 @@ In the first step, we simulate a dataset with the following specifications:
 - <tt>n_unlabeled = 5000</tt> unlabeled samples, evenly distributed over the 10 classes
 - a dimension of <tt>n_feats = 2</tt> features (to facilitate representation)
 
-Each class $i$ is represented by a bivariate Gaussian distribution with mean vector $\mu = (\mu_1^{(i)}, \mu_2^{(i)})$ and covariance matrix $$\Sigma_i = \left(\begin{array}{cc}\sigma_{1,1}^{(i)} & \sigma_{1,2}^{(i)} \\ \sigma_{1,2}^{(i)} & \sigma_{2,2}^{(i)}\end{array}\right)$$. The known classes are 0-3.
+Each class $i$ is represented by a bivariate Gaussian distribution with mean vector $\mu = (\mu_1^{(i)}, \mu_2^{(i)})$ and symmetric covariance matrix $$\Sigma_i = \left(\begin{array}{cc}\sigma_{1,1}^{(i)} & \sigma_{1,2}^{(i)} \\ \sigma_{1,2}^{(i)} & \sigma_{2,2}^{(i)}\end{array}\right).$$ The known classes are 0-3.
 
 ```{r setup}
 library(mvtnorm)

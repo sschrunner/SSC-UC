@@ -1,0 +1,151 @@
+---
+title: "MNIST example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MNIST}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Prepare the MNIST dataset
+
+```{r setup}
+library(dslabs)
+set.seed(1)
+
+# load dataset
+mnist <- read_mnist()
+
+# sample sizes
+n_labeled <- 500
+n_unlabeled <- 5000
+
+# known vs. unknown classes
+known_classes <- 0:4
+all_classes <- sort(unique(mnist$train$labels))
+labeled_train <- as.vector(sapply(known_classes, 
+                        function(x){
+                          return(sample(which(mnist$train$labels == x),
+                                        n_labeled / length(known_classes)))
+                        }))
+unlabeled_train <- as.vector(sapply(all_classes, 
+                        function(x){
+                          return(sample(setdiff(which(mnist$train$labels == x), labeled_train),
+                                        n_unlabeled / length(all_classes)))
+                        }))
+
+X <- mnist$train$images[union(labeled_train, unlabeled_train),]
+y <- c(mnist$train$labels[labeled_train], rep(NA, length(unlabeled_train)))
+ytrue <- mnist$train$labels[union(labeled_train, unlabeled_train)]
+
+summary(as.factor(y))
+summary(as.factor(ytrue))
+```
+
+```{r real-world data}
+# input dataset for the model
+data <- as.data.frame(cbind(X, y))
+
+# model formula
+formula <- y ~ . - 1
+```
+
+## Train SSC-UC model
+
+The SSC-UC model is called via <tt>SSCUC</tt> and returns a <tt>BayesClassifier</tt> object with known and unknown classes. In this case, a Bayes classifier is used, specified by the argument <tt>naive=TRUE</tt>.
+
+```{r train}
+library(SSCUC)
+
+# train model
+model <- SSC(formula, data, naive = TRUE)
+summary(model)
+```
+
+## Predict and evaluate unlabeled data using SSC-UC model
+
+```{r predict}
+# predict on test dataset
+test <- as.data.frame(cbind(mnist$test$images, 
+                            y = mnist$test$labels))
+
+pred <- predict(model, newdata = test, type = "class")
+```
+
+### Evaluate in full confusion matrix (multiple unknown classes)
+
+```{r evaluate1, fig.height = 6, fig.width = 6, fig.align = 'center'}
+library(caret)
+library(knitr)
+library(ggplot2)
+
+# specify levels
+levels <- sort(union(unique(pred), unique(test$y)))
+
+cm <- confusionMatrix(
+    reference = factor(test$y, levels = levels),
+    data = factor(pred, levels = levels))
+
+print(cm$table)
+
+kable(cm$table[paste0(sort(unique(pred))),paste0(sort(unique(test$y))), drop = F])
+mean(cm$byClass[,"F1"], na.rm = TRUE)
+
+df <- data.frame(
+  value = as.vector(cm$table[paste0(sort(unique(pred))),paste0(sort(unique(test$y)))]),
+  predicted = rep(sort(unique(pred)), each = length(unique(test$y))),
+  true = rep(sort(unique(test$y)), length(unique(pred)))
+)
+ggplot(df, aes(x = true, y = predicted, fill = value)) +
+  geom_tile(alpha = 0.8) + 
+  theme_bw() + 
+  theme(legend.position = "bottom") + 
+  labs(x = "true label",
+       y = "predicted label",
+       title = "SSC-UC results on MNIST dataset",
+       subtitle = "10-class dataset with 5 unknown classes - confusion matrix",
+       fill = "absolute count") + 
+  scale_fill_gradient(low = "white", high = "black", limits = c(0, max(df$value)))
+```
+
+### Visualization of results
+```{r plot1, fig.height = 6, fig.width = 6, fig.align = 'center'}
+library(ggplot2)
+library(latex2exp)
+
+mean <- sd <- matrix(NA, ncol = length(model), nrow = length(model$all.features), 
+         dimnames = list(model$all.features, levels(model)))
+
+mean[dimnames(model),] <- sapply(levels(model),function(x){return(model$param[[x]]$mu)})
+sd[dimnames(model),] <- sapply(levels(model), function(x){return(sqrt(diag(model$param[[x]]$Sigma)))})
+
+df <- data.frame(
+  x1 = rep(1:28, 28 * length(model)),
+  x2 = rep(1:28, each = 28),
+  class = rep(levels(model), each = length(model$all.features)),
+  type = rep(c("mu", "sigma"), each = 784 * length(model)),
+  value = c(mean, as.vector(sd))
+)
+
+appender <- function(string) ifelse(string %in% c("mu", "sigma"), TeX(paste0("$\\",string,"$")), string)
+ggplot(df, aes(x = x1, y = -x2)) + 
+  geom_tile(aes(fill = value)) +
+  facet_grid(type~class, 
+             labeller = as_labeller(appender, default = label_parsed)) + 
+  theme_bw() + 
+  theme(legend.position = "bottom") + 
+  scale_x_continuous(breaks = NULL) +
+  scale_y_continuous(breaks = NULL) +
+  labs(fill = "", 
+       x = "",
+       y = "",
+       title = "SSC-UC results on MNIST dataset",
+       subtitle = TeX("10-class dataset with 5 unknown classes (class mean $\\mu$ and variance $\\sigma$)"))
+```

@@ -14,19 +14,30 @@ print.BayesClassifier <- function(x, ...){
 #' @param object a BayesClassifier object
 #' @importFrom stats coef
 #' @importFrom knitr kable
+#' @importFrom utils head
 #' @export
 summary.BayesClassifier <- function(object, ...){
-  cat("BayesClassifier model with ", dim(object), " classes \n")
-  print(object$formula)
-
-  cat("Model parameters")
-  kable(
-    data.frame(
-      mu = sapply(coef(object), function(x){return(paste0(round(x$mu, 2), collapse = ","))}),
-      Sigma = sapply(coef(object), function(x){return(paste0(round(x$Sigma, 2), collapse = ","))}),
-      prior = sapply(coef(object), function(x){return(ifelse(exp(x$prior) > 0.005, round(exp(x$prior),2), "<0.01"))})
-    )
+  cat("BayesClassifier model with", length(object), "classes and", dim(object), "non-constant features\n")
+  if(dim(object) < length(object$all.features)){
+    cat("Note: the total number of features is", length(object$all.features), "\n")
+  }
+  cat(rep("=",30), "\n", sep = "")
+  cat("formula: ", deparse(object$formula), "\n")
+  cat("used features: ", paste0(dimnames(object), collapse = ", "), "\n")
+  cat("parameters: ")
+  df <- data.frame(
+       mu = sapply(coef(object),
+                   function(x){return(paste0(round(head(x$mu, n = 10), 2), collapse = ","))}),
+       Sigma = sapply(coef(object),
+                      function(x){return(paste0(round(head(as.vector(x$Sigma), n = 10), 2), collapse = ","))}),
+       prior = sapply(coef(object),
+                      function(x){return(ifelse(exp(x$prior) > 0.005, round(exp(x$prior),2), "<0.01"))})
   )
+  if(dim(object) > 10){
+    df$mu <- paste0(df$mu, ",...")
+    df$Sigma <- paste0(df$Sigma, ",...")
+  }
+  kable(df)
 }
 
 #' @describeIn print.BayesClassifier returns the list of model parameters in the BayesClassifier
@@ -35,10 +46,28 @@ coef.BayesClassifier <- function(object, ...){
   return(object$param)
 }
 
-#' @describeIn print.BayesClassifier returns the number of classes in the BayesClassifier
+#' @describeIn print.BayesClassifier returns the names the features used in the BayesClassifier
+#' @export
+dimnames.BayesClassifier <- function(x){
+  return(names(x$param[[1]]$mu))
+}
+
+#' @describeIn print.BayesClassifier returns the dimensionality of the feature space used in the BayesClassifier
 #' @export
 dim.BayesClassifier <- function(x){
-  return(length(x$param))
+  return(length(x$param[[1]]$mu))
+}
+
+#' @describeIn print.BayesClassifier returns the names of the classes in the BayesClassifier
+#' @export
+levels.BayesClassifier <- function(x){
+  return(names(x$param))
+}
+
+#' @describeIn print.BayesClassifier returns the number of classes in the BayesClassifier
+#' @export
+length.BayesClassifier <- function(x){
+  return(length(levels(x)))
 }
 
 #' @describeIn print.BayesClassifier returns the number of training observations used for the BayesClassifier

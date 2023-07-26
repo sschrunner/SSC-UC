@@ -24,7 +24,9 @@ Imports:
     utils
 Suggests: 
     caret,
+    dslabs,
     ggplot2,
+    latex2exp,
     mvtnorm,
     rmarkdown
 VignetteBuilder: 

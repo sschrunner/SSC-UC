@@ -55,15 +55,10 @@ SSC <- function(formula, data,
 
   # only if new classes were detected
   if(length(newclass_inds) > 0){
-    # bic <- c()
-    # models <- list()
-    # for(g in 1:max_unknown){
-    #   print(length(newclass_inds))
-    #   try({
-    uniform_cols <- apply(X[newclass_inds,, drop = F], 2, function(x){return(length(unique(x)))}) == 1
+    const_cols <- apply(X[newclass_inds,, drop = F], 2, function(x){return(length(unique(x)))}) == 1
     gmmModelName <- ifelse(naive, "VVI", "VVV")
 
-    gmm <- Mclust(X[newclass_inds, !uniform_cols, drop = F],
+    gmm <- Mclust(X[newclass_inds, !const_cols, drop = F],
                   modelNames = gmmModelName) # train GMM on these new data
 
     if(is.null(gmm)){
@@ -76,12 +71,12 @@ SSC <- function(formula, data,
 
       # append new elements to classifier
       levels(y) <- c(known_classes, paste0("U",1:gmm$G))
-      y[newclass_inds] <- paste0("U", predict(gmm, newdata = X[newclass_inds, ])$classification) # set new class elements
+      y[newclass_inds] <- paste0("U",
+                                 predict(gmm, newdata = X[newclass_inds, !const_cols])$classification) # set new class elements
       data[, toString(formula[[2]])] <- y
 
       # re-train with all classes
       labeled_inds <- which(!is.na(y))
-      #mod <- BayesClassifier(formula, data[labeled_inds,], naive = naive, var_eps = var_eps)
       mod <- EM(formula, data,
                 naive = naive, var_eps = var_eps,
                 fixed_labels = labeled_inds)
@@ -89,7 +84,7 @@ SSC <- function(formula, data,
 
       while(!stop && g > 1){
         print(paste("Trying EM with", g-1, "classes"))
-        gmm1 <- Mclust(X[newclass_inds, !uniform_cols, drop = F],
+        gmm1 <- Mclust(X[newclass_inds, !const_cols, drop = F],
                        G = g-1,
                        modelNames = gmmModelName) # train alternative GMM
         if(is.null(gmm1)){
@@ -98,18 +93,17 @@ SSC <- function(formula, data,
         }
         else{
           # append new elements to classifier
-          y[newclass_inds] <- paste0("U", predict(gmm1, newdata = X[newclass_inds, ])$classification) # set new class elements
+          y[newclass_inds] <- paste0("U",
+                                     predict(gmm1, newdata = X[newclass_inds, !const_cols])$classification) # set new class elements
           y <- droplevels(y)
           data[, toString(formula[[2]])] <- y
 
           # re-train with all classes
           labeled_inds <- which(!is.na(y))
-          #mod1 <- BayesClassifier(formula, data[labeled_inds,], naive = naive, var_eps = var_eps)
           mod1 <- EM(formula, data,
                      naive = naive, var_eps = var_eps,
                      fixed_labels = labeled_inds)
           print(paste("BIC:",BIC(mod1)))
-          #return(list(mod =mod, mod1 = mod1))
 
           if(BIC(mod1) >= BIC(mod)){
             print("BIC increased when updating - stopping")
@@ -153,6 +147,7 @@ EM <- function(formula, data,
     # E-step
     model <- BayesClassifier(formula, data,
                              naive = naive, var_eps = var_eps)
+
     # M-step
     y[editable_labels] <- predict(model,
                                   newdata = data[editable_labels,],

@@ -42,3 +42,12 @@ Bayes Classifier or Naive Bayes Classifier
 \item \code{BayesClassifier()}: train a BayesClassifier object
 
 }}
+\examples{
+ set.seed(1)
+ dat <- data.frame(y = rep(c(1,2,3), each = 5),
+    x1 = as.vector(sapply(c(5,0,0), rnorm, n = 5)),
+    x2 = as.vector(sapply(c(0,0,5), rnorm, n = 5)))
+ mod <- BayesClassifier(y ~ x1 + x2, dat, naive = TRUE)
+ summary(mod)
+ predict(mod, newdata = expand.grid(x1 = c(0,5), x2 = c(0,5), y = NA), type = "class")
+}
