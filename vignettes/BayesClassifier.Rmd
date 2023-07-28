@@ -93,7 +93,7 @@ head(data)
 
 The simulated dataset is given by the following scatterplot:
 
-```{r plot0, fig.height = 6, fig.width = 6, echo = FALSE, fig.align = 'center'}
+```{r plot0, fig.height = 6, fig.width = 6, echo = FALSE, fig.align = 'center', echo=F}
 library(ggplot2)
 ggplot(rbind(subset(data, is.na(y)), subset(data, !is.na(y))),
        aes(x = x1, y = x2, color = as.factor(y))) + 
@@ -148,7 +148,7 @@ kable(confusionMatrix(
 
 The following plot shows the unlabeled data with their predicted class labels:
 
-```{r plot1, fig.height = 6, fig.width = 6, fig.align = 'center'}
+```{r plot1, fig.height = 6, fig.width = 6, fig.align = 'center', echo=F}
 library(ggplot2)
 ggplot(cbind(subset(data, is.na(y)), pred = pred), 
        aes(x = x1, y = x2, color = as.factor(pred))) + 
@@ -179,7 +179,7 @@ kable(confusionMatrix(
 
 The following plot shows the unlabeled data with their predicted class labels, when considering all unknown classes as one class.
 
-```{r plot2, fig.height = 6, fig.width = 6, fig.align = 'center'}
+```{r plot2, fig.height = 6, fig.width = 6, fig.align = 'center', echo=F}
 library(ggplot2)
 ggplot(cbind(subset(data, is.na(y)), pred = pred), 
        aes(x = x1, y = x2, color = as.factor(pred))) + 

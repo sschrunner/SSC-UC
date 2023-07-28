@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ## Prepare the MNIST dataset
 
-```{r setup}
+```{r setup, warning = F}
 library(dslabs)
 set.seed(1)
 
@@ -82,7 +82,7 @@ pred <- predict(model, newdata = test, type = "class")
 
 ### Evaluate in full confusion matrix (multiple unknown classes)
 
-```{r evaluate1, fig.height = 6, fig.width = 6, fig.align = 'center'}
+```{r evaluate1}
 library(caret)
 library(knitr)
 library(ggplot2)
@@ -90,22 +90,24 @@ library(ggplot2)
 # specify levels
 levels <- sort(union(unique(pred), unique(test$y)))
 
+# compute confusion matrix
 cm <- confusionMatrix(
     reference = factor(test$y, levels = levels),
     data = factor(pred, levels = levels))
 
-print(cm$table)
+# print macro-averaged F1 score
+cat("Macro-averaged F1 score: ", mean(cm$byClass[,"F1"], na.rm = TRUE))
+```
 
-kable(cm$table[paste0(sort(unique(pred))),paste0(sort(unique(test$y))), drop = F])
-mean(cm$byClass[,"F1"], na.rm = TRUE)
-
+```{r evaluate2, fig.height = 6, fig.width = 6, fig.align = 'center', echo=FALSE}
 df <- data.frame(
   value = as.vector(cm$table[paste0(sort(unique(pred))),paste0(sort(unique(test$y)))]),
-  predicted = rep(sort(unique(pred)), each = length(unique(test$y))),
-  true = rep(sort(unique(test$y)), length(unique(pred)))
+  predicted = rep(sort(unique(pred)), length(unique(test$y))),
+  true = rep(sort(unique(test$y)), each = length(unique(pred)))
 )
 ggplot(df, aes(x = true, y = predicted, fill = value)) +
-  geom_tile(alpha = 0.8) + 
+  geom_tile(alpha = 0.8) +
+  geom_text(aes(label = value)) +
   theme_bw() + 
   theme(legend.position = "bottom") + 
   labs(x = "true label",
@@ -118,7 +120,7 @@ ggplot(df, aes(x = true, y = predicted, fill = value)) +
 ```
 
 ### Visualization of results
-```{r plot1, fig.height = 6, fig.width = 12, fig.align = 'center'}
+```{r plot1, fig.height = 5, fig.width = 10, fig.align = 'center', echo = F}
 library(ggplot2)
 library(latex2exp)
 
