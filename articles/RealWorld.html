@@ -128,10 +128,31 @@ case, a Bayes classifier is used, specified by the argument
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dx.doi.org/10.1145/3341105.3373890" class="external-link">SSCUC</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># train model</span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SSC.html">SSC</a></span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, naive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SSC.html">SSC</a></span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, naive <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>             prior <span class="op">=</span> <span class="st">"uniform"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in meVVI(data = data, z = z, prior = prior, control = control, warn =</span></span>
+<span><span class="co">#&gt; warn): mixing proportion fell below threshold</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in meVVI(data = data, z = z, prior = prior, control = control, warn =</span></span>
+<span><span class="co">#&gt; warn): mixing proportion fell below threshold</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in meVVI(data = data, z = z, prior = prior, control = control, warn =</span></span>
+<span><span class="co">#&gt; warn): mixing proportion fell below threshold</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in meVVI(data = data, z = z, prior = prior, control = control, warn =</span></span>
+<span><span class="co">#&gt; warn): mixing proportion fell below threshold</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in meVVI(data = data, z = z, prior = prior, control = control, warn =</span></span>
+<span><span class="co">#&gt; warn): mixing proportion fell below threshold</span></span>
+<span><span class="co">#&gt; Warning in summary.mclustBIC(BIC, data, G = G, modelNames = modelNames): best</span></span>
+<span><span class="co">#&gt; model occurs at the min or max of number of components considered!</span></span>
+<span><span class="co">#&gt; Warning in Mclust(X[newclass_inds, !const_cols, drop = F], G = g_opts,</span></span>
+<span><span class="co">#&gt; modelNames = gmmModelName, : optimal number of clusters occurs at min choice</span></span>
 <span><span class="co">#&gt; [1] "Starting EM with 1 classes"</span></span>
-<span><span class="co">#&gt; [1] "EM converged after 10 iterations"</span></span>
-<span><span class="co">#&gt; [1] "BIC: 25679779.7903375"</span></span>
+<span><span class="co">#&gt; Warning in BayesClassifier(formula, data, naive = naive, prior = prior, :</span></span>
+<span><span class="co">#&gt; BayesClassifier removed 4622 NAs</span></span>
+<span><span class="co">#&gt; [1] "EM converged after 12 iterations"</span></span>
+<span><span class="co">#&gt; [1] "BIC: 25677402.5309862"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; BayesClassifier model with 6 classes and 667 non-constant features</span></span>
 <span><span class="co">#&gt; Note: the total number of features is 784 </span></span>
@@ -157,37 +178,37 @@ case, a Bayes classifier is used, specified by the argument
 <td align="left">0</td>
 <td align="left">0,0,0,0,0,0,0,0,0,0,…</td>
 <td align="left">0.01,0,0,0,0,0,0,0,0,0,…</td>
-<td align="right">0.16</td>
+<td align="right">0.17</td>
 </tr>
 <tr class="even">
 <td align="left">1</td>
 <td align="left">0,0,0,0,0,0,0,0,0,0,…</td>
 <td align="left">0.01,0,0,0,0,0,0,0,0,0,…</td>
-<td align="right">0.14</td>
+<td align="right">0.17</td>
 </tr>
 <tr class="odd">
 <td align="left">2</td>
 <td align="left">0,0.22,0.17,0.08,0,0,0.04,0.35,0.09,0,…</td>
 <td align="left">0.02,0,0,0,0,0,0,0,0,0,…</td>
-<td align="right">0.12</td>
+<td align="right">0.17</td>
 </tr>
 <tr class="even">
 <td align="left">3</td>
 <td align="left">0,0,0,0,0,0,0,0,0,0,…</td>
 <td align="left">0.01,0,0,0,0,0,0,0,0,0,…</td>
-<td align="right">0.15</td>
+<td align="right">0.17</td>
 </tr>
 <tr class="odd">
 <td align="left">4</td>
 <td align="left">0,0,0,0,0,0,0,0,0,0,…</td>
 <td align="left">0.01,0,0,0,0,0,0,0,0,0,…</td>
-<td align="right">0.27</td>
+<td align="right">0.17</td>
 </tr>
 <tr class="even">
 <td align="left">U1</td>
-<td align="left">0,0,0.01,0.52,0.55,0.97,0.35,0.25,0.04,0.41,…</td>
+<td align="left">0,0,0.01,0.52,0.55,0.96,0.35,0.25,0.04,0.41,…</td>
 <td align="left">0.01,0,0,0,0,0,0,0,0,0,…</td>
-<td align="right">0.15</td>
+<td align="right">0.17</td>
 </tr>
 </tbody>
 </table>
@@ -221,17 +242,17 @@ case, a Bayes classifier is used, specified by the argument
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cm</span><span class="op">$</span><span class="va">table</span><span class="op">)</span></span>
 <span><span class="co">#&gt;           Reference</span></span>
 <span><span class="co">#&gt; Prediction    0    1    2    3    4    5    6    7    8    9   U1</span></span>
-<span><span class="co">#&gt;         0   873    2   71  190   43  195   71    3   32    7    0</span></span>
+<span><span class="co">#&gt;         0   870    2   73  187   47  197   71    4   32    7    0</span></span>
 <span><span class="co">#&gt;         1     0 1051   22   31   20   55   19    6  160   12    0</span></span>
-<span><span class="co">#&gt;         2    16   10  442   34   22   61  495    6   25    2    0</span></span>
-<span><span class="co">#&gt;         3    21   43  407  477   58  106  177   54  160   26    0</span></span>
-<span><span class="co">#&gt;         4    14   27   43  238  781  299    8  288  491  629    0</span></span>
+<span><span class="co">#&gt;         2    15   10  437   34   22   59  493    6   25    2    0</span></span>
+<span><span class="co">#&gt;         3    22   43  410  476   57  106  179   54  160   26    0</span></span>
+<span><span class="co">#&gt;         4    16   27   43  242  778  299    8  287  491  629    0</span></span>
 <span><span class="co">#&gt;         5     0    0    0    0    0    0    0    0    0    0    0</span></span>
 <span><span class="co">#&gt;         6     0    0    0    0    0    0    0    0    0    0    0</span></span>
 <span><span class="co">#&gt;         7     0    0    0    0    0    0    0    0    0    0    0</span></span>
 <span><span class="co">#&gt;         8     0    0    0    0    0    0    0    0    0    0    0</span></span>
 <span><span class="co">#&gt;         9     0    0    0    0    0    0    0    0    0    0    0</span></span>
-<span><span class="co">#&gt;         U1   56    2   47   40   58  176  188  671  106  333    0</span></span>
+<span><span class="co">#&gt;         U1   57    2   47   40   58  176  188  671  106  333    0</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">cm</span><span class="op">$</span><span class="va">table</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">test</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -251,14 +272,14 @@ case, a Bayes classifier is used, specified by the argument
 <tbody>
 <tr class="odd">
 <td align="left">0</td>
-<td align="right">873</td>
+<td align="right">870</td>
 <td align="right">2</td>
+<td align="right">73</td>
+<td align="right">187</td>
+<td align="right">47</td>
+<td align="right">197</td>
 <td align="right">71</td>
-<td align="right">190</td>
-<td align="right">43</td>
-<td align="right">195</td>
-<td align="right">71</td>
-<td align="right">3</td>
+<td align="right">4</td>
 <td align="right">32</td>
 <td align="right">7</td>
 </tr>
@@ -277,46 +298,46 @@ case, a Bayes classifier is used, specified by the argument
 </tr>
 <tr class="odd">
 <td align="left">2</td>
-<td align="right">16</td>
+<td align="right">15</td>
 <td align="right">10</td>
-<td align="right">442</td>
+<td align="right">437</td>
 <td align="right">34</td>
 <td align="right">22</td>
-<td align="right">61</td>
-<td align="right">495</td>
+<td align="right">59</td>
+<td align="right">493</td>
 <td align="right">6</td>
 <td align="right">25</td>
 <td align="right">2</td>
 </tr>
 <tr class="even">
 <td align="left">3</td>
-<td align="right">21</td>
+<td align="right">22</td>
 <td align="right">43</td>
-<td align="right">407</td>
-<td align="right">477</td>
-<td align="right">58</td>
+<td align="right">410</td>
+<td align="right">476</td>
+<td align="right">57</td>
 <td align="right">106</td>
-<td align="right">177</td>
+<td align="right">179</td>
 <td align="right">54</td>
 <td align="right">160</td>
 <td align="right">26</td>
 </tr>
 <tr class="odd">
 <td align="left">4</td>
-<td align="right">14</td>
+<td align="right">16</td>
 <td align="right">27</td>
 <td align="right">43</td>
-<td align="right">238</td>
-<td align="right">781</td>
+<td align="right">242</td>
+<td align="right">778</td>
 <td align="right">299</td>
 <td align="right">8</td>
-<td align="right">288</td>
+<td align="right">287</td>
 <td align="right">491</td>
 <td align="right">629</td>
 </tr>
 <tr class="even">
 <td align="left">U1</td>
-<td align="right">56</td>
+<td align="right">57</td>
 <td align="right">2</td>
 <td align="right">47</td>
 <td align="right">40</td>
@@ -331,7 +352,7 @@ case, a Bayes classifier is used, specified by the argument
 </table>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">cm</span><span class="op">$</span><span class="va">byClass</span><span class="op">[</span>,<span class="st">"F1"</span><span class="op">]</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.5487542</span></span>
+<span><span class="co">#&gt; [1] 0.5469114</span></span>
 <span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="va">cm</span><span class="op">$</span><span class="va">table</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">test</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>,</span>
@@ -347,7 +368,8 @@ case, a Bayes classifier is used, specified by the argument
 <span>       title <span class="op">=</span> <span class="st">"SSC-UC results on MNIST dataset"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"10-class dataset with 5 unknown classes - confusion matrix"</span>,</span>
 <span>       fill <span class="op">=</span> <span class="st">"absolute count"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"white"</span>, high <span class="op">=</span> <span class="st">"black"</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">value</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"white"</span>, high <span class="op">=</span> <span class="st">"black"</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">value</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span></span></code></pre></div>
 <p><img src="RealWorld_files/figure-html/evaluate1-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -385,7 +407,7 @@ case, a Bayes classifier is used, specified by the argument
 <span>       y <span class="op">=</span> <span class="st">""</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"SSC-UC results on MNIST dataset"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="fu"><a href="https://www.stefanom.io/latex2exp/reference/TeX.html" class="external-link">TeX</a></span><span class="op">(</span><span class="st">"10-class dataset with 5 unknown classes (class mean $\\mu$ and variance $\\sigma$)"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="RealWorld_files/figure-html/plot1-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="RealWorld_files/figure-html/plot1-1.png" width="1152" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -208,15 +208,23 @@ case, a Bayes classifier is used, specified by the argument
 <span></span>
 <span><span class="co"># train model</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SSC.html">SSC</a></span><span class="op">(</span><span class="va">formula</span>, <span class="va">data</span>, naive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Starting EM with 9 classes"</span></span>
+<span><span class="co">#&gt; Warning in summary.mclustBIC(BIC, data, G = G, modelNames = modelNames): best</span></span>
+<span><span class="co">#&gt; model occurs at the min or max of number of components considered!</span></span>
+<span><span class="co">#&gt; Warning in Mclust(X[newclass_inds, !const_cols, drop = F], G = g_opts,</span></span>
+<span><span class="co">#&gt; modelNames = gmmModelName, : optimal number of clusters occurs at max choice</span></span>
+<span><span class="co">#&gt; [1] "Starting EM with 6 classes"</span></span>
+<span><span class="co">#&gt; Warning in BayesClassifier(formula, data, naive = naive, prior = prior, :</span></span>
+<span><span class="co">#&gt; BayesClassifier removed 1957 NAs</span></span>
+<span><span class="co">#&gt; [1] "EM converged after 5 iterations"</span></span>
+<span><span class="co">#&gt; [1] "BIC: 18418.8851091367"</span></span>
+<span><span class="co">#&gt; [1] "Trying EM with 5 classes"</span></span>
+<span><span class="co">#&gt; Warning in BayesClassifier(formula, data, naive = naive, prior = prior, :</span></span>
+<span><span class="co">#&gt; BayesClassifier removed 1957 NAs</span></span>
 <span><span class="co">#&gt; [1] "EM converged after 4 iterations"</span></span>
-<span><span class="co">#&gt; [1] "BIC: 15202.2990498956"</span></span>
-<span><span class="co">#&gt; [1] "Trying EM with 8 classes"</span></span>
-<span><span class="co">#&gt; [1] "EM converged after 4 iterations"</span></span>
-<span><span class="co">#&gt; [1] "BIC: 15823.407272196"</span></span>
+<span><span class="co">#&gt; [1] "BIC: 22778.8389840301"</span></span>
 <span><span class="co">#&gt; [1] "BIC increased when updating - stopping"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span><span class="co">#&gt; BayesClassifier model with 13 classes and 2 non-constant features</span></span>
+<span><span class="co">#&gt; BayesClassifier model with 10 classes and 2 non-constant features</span></span>
 <span><span class="co">#&gt; ==============================</span></span>
 <span><span class="co">#&gt; formula:  y ~ x1 + x2 - 1 </span></span>
 <span><span class="co">#&gt; used features:  x1, x2 </span></span>
@@ -231,9 +239,9 @@ case, a Bayes classifier is used, specified by the argument
 <tbody>
 <tr class="odd">
 <td align="left">0</td>
-<td align="left">-4.66,-2.52</td>
-<td align="left">0.64,0.4,0.4,0.39</td>
-<td align="right">0.08</td>
+<td align="left">-4.66,-2.53</td>
+<td align="left">0.84,0.52,0.52,0.5</td>
+<td align="right">0.09</td>
 </tr>
 <tr class="even">
 <td align="left">1</td>
@@ -249,8 +257,8 @@ case, a Bayes classifier is used, specified by the argument
 </tr>
 <tr class="even">
 <td align="left">3</td>
-<td align="left">8.82,3.23</td>
-<td align="left">0.27,-0.17,-0.17,0.43</td>
+<td align="left">8.81,3.25</td>
+<td align="left">0.31,-0.18,-0.18,0.44</td>
 <td align="right">0.09</td>
 </tr>
 <tr class="odd">
@@ -261,9 +269,9 @@ case, a Bayes classifier is used, specified by the argument
 </tr>
 <tr class="even">
 <td align="left">U2</td>
-<td align="left">5.38,-0.07</td>
-<td align="left">0.36,0.24,0.24,0.48</td>
-<td align="right">0.09</td>
+<td align="left">4.55,-1.18</td>
+<td align="left">1.08,1.06,1.06,1.93</td>
+<td align="right">0.18</td>
 </tr>
 <tr class="odd">
 <td align="left">U3</td>
@@ -279,33 +287,15 @@ case, a Bayes classifier is used, specified by the argument
 </tr>
 <tr class="odd">
 <td align="left">U5</td>
-<td align="left">3.69,-2.32</td>
-<td align="left">0.38,-0.09,-0.09,0.8</td>
+<td align="left">4.37,9.92</td>
+<td align="left">0.27,0.5,0.5,1.37</td>
 <td align="right">0.09</td>
 </tr>
 <tr class="even">
 <td align="left">U6</td>
-<td align="left">4.35,9.93</td>
-<td align="left">0.31,0.48,0.48,1.37</td>
-<td align="right">0.09</td>
-</tr>
-<tr class="odd">
-<td align="left">U7</td>
-<td align="left">8.99,3.27</td>
-<td align="left">1.06,-0.53,-0.53,1.16</td>
-<td align="right">0.02</td>
-</tr>
-<tr class="even">
-<td align="left">U8</td>
-<td align="left">-4.84,-2.63</td>
-<td align="left">2.86,1.75,1.75,1.51</td>
-<td align="right">0.03</td>
-</tr>
-<tr class="odd">
-<td align="left">U9</td>
-<td align="left">-3.7,7.44</td>
-<td align="left">9.57,-2.02,-2.02,0.77</td>
-<td align="right">0.01</td>
+<td align="left">0.29,1.24</td>
+<td align="left">43.47,11.45,11.45,17.91</td>
+<td align="right">0.05</td>
 </tr>
 </tbody>
 </table>
@@ -359,7 +349,7 @@ classes (<tt>U1-U8</tt>) as predicted labels.</li>
 <tbody>
 <tr class="odd">
 <td align="left">0</td>
-<td align="right">419</td>
+<td align="right">489</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -401,7 +391,7 @@ classes (<tt>U1-U8</tt>) as predicted labels.</li>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">473</td>
+<td align="right">498</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -430,8 +420,8 @@ classes (<tt>U1-U8</tt>) as predicted labels.</li>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">18</td>
-<td align="right">477</td>
+<td align="right">497</td>
+<td align="right">500</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
@@ -469,46 +459,20 @@ classes (<tt>U1-U8</tt>) as predicted labels.</li>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">482</td>
-<td align="right">23</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">U6</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">500</td>
 <td align="right">0</td>
 </tr>
-<tr class="odd">
-<td align="left">U7</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">27</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-</tr>
 <tr class="even">
-<td align="left">U8</td>
-<td align="right">81</td>
+<td align="left">U6</td>
+<td align="right">11</td>
 <td align="right">0</td>
 <td align="right">0</td>
+<td align="right">2</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
+<td align="right">3</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -565,7 +529,7 @@ number of labels in the confusion matrix to <tt>0-3</tt> and
 <tbody>
 <tr class="odd">
 <td align="left">0</td>
-<td align="right">419</td>
+<td align="right">489</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -607,7 +571,7 @@ number of labels in the confusion matrix to <tt>0-3</tt> and
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">473</td>
+<td align="right">498</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -617,10 +581,10 @@ number of labels in the confusion matrix to <tt>0-3</tt> and
 </tr>
 <tr class="odd">
 <td align="left">U</td>
-<td align="right">81</td>
+<td align="right">11</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">27</td>
+<td align="right">2</td>
 <td align="right">500</td>
 <td align="right">500</td>
 <td align="right">500</td>

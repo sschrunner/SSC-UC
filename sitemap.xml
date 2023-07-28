@@ -37,6 +37,9 @@
     <loc>https://sschrunner.github.io/SSC-UC/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://sschrunner.github.io/SSC-UC/reference/predict.BayesClassifier.html</loc>
+  </url>
+  <url>
     <loc>https://sschrunner.github.io/SSC-UC/reference/print.BayesClassifier.html</loc>
   </url>
 </urlset>
