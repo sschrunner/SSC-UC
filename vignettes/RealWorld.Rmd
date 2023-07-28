@@ -65,7 +65,8 @@ The SSC-UC model is called via <tt>SSCUC</tt> and returns a <tt>BayesClassifier<
 library(SSCUC)
 
 # train model
-model <- SSC(formula, data, naive = TRUE)
+model <- SSC(formula, data, naive = TRUE,
+             prior = "uniform")
 summary(model)
 ```
 
@@ -112,11 +113,12 @@ ggplot(df, aes(x = true, y = predicted, fill = value)) +
        title = "SSC-UC results on MNIST dataset",
        subtitle = "10-class dataset with 5 unknown classes - confusion matrix",
        fill = "absolute count") + 
-  scale_fill_gradient(low = "white", high = "black", limits = c(0, max(df$value)))
+  scale_fill_gradient(low = "white", high = "black", limits = c(0, max(df$value))) + 
+  scale_x_continuous(breaks = 0:9)
 ```
 
 ### Visualization of results
-```{r plot1, fig.height = 6, fig.width = 6, fig.align = 'center'}
+```{r plot1, fig.height = 6, fig.width = 12, fig.align = 'center'}
 library(ggplot2)
 library(latex2exp)
 

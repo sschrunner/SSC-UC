@@ -3,6 +3,15 @@
 #' @param x a BayesClassifier object
 #' @param ... currently unused
 #' @describeIn print.BayesClassifier prints the BayesClassifier
+#' @returns The form of the returned values of the generic functions for class ´BayesClassifier´ are as follows:
+#' \itemize{
+#'  \item{´print´ and ´summary´ return a console output only}
+#'  \item{´coef´ returns the list of parameters, see \link{BayesClassifier}}
+#'  \item{´dimnames´ and ´levels´ return a vector containing the feature names and class names, respectively}
+#'  \item{´dim´, ´length´ and ´nobs´ return a scalar representing the number of features, the number of classes and the number of training observations, respectively}
+#'  \item{´formula´ returns the formula object used to call the BayesClassifier}
+#'  \item{´logLik´, ´AIC´ and ´BIC´ return the log-likelihood, the AIC and the BIC values, respectively}
+#' }
 #' @importFrom utils str
 #' @export
 print.BayesClassifier <- function(x, ...){

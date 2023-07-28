@@ -9,8 +9,10 @@ SSC(
   data,
   perc_spies = 0.05,
   naive = FALSE,
+  prior = "proportional",
   var_eps = 0.01,
   max_unknown = 6,
+  fixed_unknown = NULL,
   runs = 10
 )
 }
@@ -23,15 +25,29 @@ SSC(
 
 \item{naive}{whether a Bayes or Naive Bayes classifier should be used}
 
+\item{prior}{type of class prior; either "uniform" (all classes are equally weighted) or "proportional" (all classes are weighted proportionally to their numbers of samples in the training data)}
+
 \item{var_eps}{scalar to add to the main diagonal of the covariance matrix to assure numerical stability. If 0, no scalar will be added.}
 
-\item{max_unknown}{maximum number of unknown classes}
+\item{max_unknown}{maximum number of unknown classes (when number of unknown classes is determined automatically)}
+
+\item{fixed_unknown}{fixed number of unknown classes (when number of unknown classes is specified manually)}
 
 \item{runs}{number of bootstrap runs for selecting "likely unknowns"}
 }
 \value{
-a BayesClassifier object
+a ´BayesClassifier´ object, see \link{BayesClassifier}
 }
 \description{
-Builds and trains a semi-supervised classifier with awareness of unknown classes, as described in Schrunner et al. (2020).
+Trains a semi-supervised classifier with awareness of unknown classes, as described in \insertCite{Schrunner2020}{SSCUC}.
+}
+\details{
+Given a semi-supervised setup with labeled and unlabeled training data, as well as known and unknown classes (classes represented in the labeled and unlabeled training data or in unlabeled training data only, respectively), a Bayes classifier shall be trained.
+The algorithm is described in \insertCite{Schrunner2020}{SSCUC}.
+}
+\references{
+\insertAllCited{}
+}
+\seealso{
+\link{EM} for semi-supervised classification with known classes only, \link{BayesClassifier} for supervised classification
 }

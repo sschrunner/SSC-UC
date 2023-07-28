@@ -107,7 +107,8 @@ The SSC-UC model is called via <tt>SSCUC</tt> and returns a <tt>BayesClassifier<
 library(SSCUC)
 
 # train model
-model <- SSC(formula, data, naive = TRUE)
+model <- SSC(formula, data,
+             naive = TRUE)
 summary(model)
 ```
 
